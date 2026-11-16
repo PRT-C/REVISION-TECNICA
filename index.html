@@ -1,0 +1,239 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Datos Revision Tecnica</title>
+    <style>
+        body {
+            margin: 0;
+            padding: 0;
+            background-color: #e6e6e6;
+            font-family: Arial, Helvetica, sans-serif;
+            font-size: 11px;
+            color: #000000;
+        }
+        .container {
+            max-width: 450px;
+            margin: 0 auto;
+            background-color: #ececec;
+            border-left: 1px solid #d4d4d4;
+            border-right: 1px solid #d4d4d4;
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+        }
+        /* Botón Enviar superior */
+        .btn-enviar-container {
+            background-color: #efefef;
+            padding: 8px;
+            text-align: center;
+            border-bottom: 1px solid #cccccc;
+        }
+        .btn-enviar {
+            background: linear-gradient(to bottom, #f9f9f9 0%, #e1e1e1 100%);
+            border: 1px solid #adadad;
+            padding: 4px 25px;
+            font-weight: bold;
+            font-size: 12px;
+            cursor: pointer;
+            border-radius: 2px;
+        }
+        /* Cabecera Azul */
+        .header-azul {
+            background: linear-gradient(to bottom, #729bc3 0%, #517fae 50%, #43719e 100%);
+            color: #ffffff;
+            text-align: center;
+            padding: 8px 5px;
+            font-weight: bold;
+            font-size: 12px;
+            border-top: 1px solid #8ab0d6;
+            border-bottom: 1px solid #335577;
+            line-height: 1.3;
+        }
+        .header-azul span {
+            font-size: 11px;
+            font-weight: normal;
+        }
+        /* Tabla de datos */
+        .tabla-datos {
+            width: 100%;
+            border-collapse: collapse;
+            background-color: #ececec;
+        }
+        .tabla-datos td {
+            padding: 4px 8px;
+            border-bottom: 1px solid #cccccc;
+            border-right: 1px solid #cccccc;
+            font-size: 11px;
+        }
+        .seccion-titulo {
+            background-color: #e2e2e2;
+            font-weight: bold;
+            color: #000000;
+            padding-top: 8px !important;
+            padding-bottom: 4px !important;
+            border-top: 1px solid #b5b5b5;
+        }
+        .etiqueta {
+            font-weight: normal;
+            color: #333333;
+        }
+        .valor {
+            font-weight: normal;
+            color: #000000;
+        }
+        .spacer {
+            flex-grow: 1;
+            background-color: #e0e0e0;
+            border-bottom: 1px solid #cccccc;
+        }
+        /* Pie de página */
+        .footer-azul {
+            background: linear-gradient(to bottom, #729bc3 0%, #517fae 50%, #43719e 100%);
+            color: #ffffff;
+            text-align: center;
+            padding: 10px 5px;
+            font-weight: bold;
+            font-size: 12px;
+            border-top: 1px solid #8ab0d6;
+            line-height: 1.3;
+        }
+    </style>
+</head>
+<body>
+
+<div class="container">
+    <!-- Botón Superior -->
+    <div class="btn-enviar-container">
+        <button class="btn-enviar" onclick="window.history.back()">Enviar</button>
+    </div>
+
+    <!-- Título Principal -->
+    <div class="header-azul">
+        Datos<br>
+        <span>Revision Tecnica</span>
+    </div>
+
+    <!-- Contenido en Tabla -->
+    <table class="tabla-datos" id="tablaInfo">
+        <!-- Se llena dinámicamente con JavaScript según la patente -->
+    </table>
+
+    <!-- Espacio flexible para mantener el footer abajo -->
+    <div class="spacer"></div>
+
+    <!-- Pie institucional -->
+    <div class="footer-azul">
+        Ministerio de Transporte<br>
+        y Telecomunicaciones
+    </div>
+</div>
+
+<script>
+    // --- BASE DE DATOS LOCAL EDITABLE ---
+    // Aquí puedes cambiar, agregar o modificar los datos de las patentes que necesites.
+    const baseDatos = {
+        "RCJT39": {
+            patente: "RCJT39",
+            marca: "FORD",
+            tipo: "STATION WAGON",
+            modelo: "TERRITORY",
+            anio: "2021",
+            tecRegion: "VIII del Biobío",
+            tecCert: "B0801000001506286",
+            tecFecha: "11-03-2024",
+            tecEstado: "Revision vencida",
+            tecVenc: "31-01-2026",
+            tecNombre: "PRESTOTEC LTDA.",
+            tecDir: "Autopista a Talcahuano Nº3275",
+            gasRegion: "VIII del Biobío",
+            gasCert: "B0801000001506286",
+            gasFecha: "11-03-2024",
+            gasEstado: "Revision vencida",
+            gasVenc: "31-01-2026",
+            gasNombre: "PRESTOTEC LTDA.",
+            gasDir: "Autopista a Talcahuano Nº3275"
+        },
+        "JYLY22": {
+            patente: "JYLY22",
+            marca: "CHEVROLET",
+            tipo: "AUTOMOVIL",
+            modelo: "Sail",
+            anio: "2022",
+            tecRegion: "VIII del Biobío",
+            tecCert: "B0801000009999999",
+            tecFecha: "12-05-2025",
+            tecEstado: "Revision al dia",
+            tecVenc: "12-05-2027",
+            tecNombre: "PRESTOTEC LTDA.",
+            tecDir: "Autopista a Talcahuano Nº3275",
+            gasRegion: "VIII del Biobío",
+            gasCert: "B0801000009999999",
+            gasFecha: "12-05-2025",
+            gasEstado: "Revision al dia",
+            gasVenc: "12-05-2027",
+            gasNombre: "PRESTOTEC LTDA.",
+            gasDir: "Autopista a Talcahuano Nº3275"
+        }
+    };
+
+    // Leer el parámetro ?patente= de la URL
+    const urlParams = new URLSearchParams(window.location.search);
+    const patenteQuery = (urlParams.get('patente') || 'RCJT39').toUpperCase();
+
+    // Obtener los datos o usar uno por defecto si no existe
+    const vehiculo = baseDatos[patenteQuery] || {
+        patente: patenteQuery,
+        marca: "FORD",
+        tipo: "STATION WAGON",
+        modelo: "TERRITORY",
+        anio: "2021",
+        tecRegion: "VIII del Biobío",
+        tecCert: "B0801000001506286",
+        tecFecha: "11-03-2024",
+        tecEstado: "Revision vencida",
+        tecVenc: "31-01-2026",
+        tecNombre: "PRESTOTEC LTDA.",
+        tecDir: "Autopista a Talcahuano Nº3275",
+        gasRegion: "VIII del Biobío",
+        gasCert: "B0801000001506286",
+        gasFecha: "11-03-2024",
+        gasEstado: "Revision vencida",
+        gasVenc: "31-01-2026",
+        gasNombre: "PRESTOTEC LTDA.",
+        gasDir: "Autopista a Talcahuano Nº3275"
+    };
+
+    // Inyectar el contenido HTML respetando estrictamente el formato de celdas
+    const htmlContenido = `
+        <tr><td><span class="etiqueta">PLACA PATENTE:</span> <span class="valor">${vehiculo.patente}</span></td></tr>
+        <tr><td><span class="etiqueta">Marca:</span> <span class="valor">${vehiculo.marca}</span></td></tr>
+        <tr><td><span class="etiqueta">Tipo:</span> <span class="valor">${vehiculo.tipo}</span></td></tr>
+        <tr><td><span class="etiqueta">Modelo:</span> <span class="valor">${vehiculo.modelo}</span></td></tr>
+        <tr><td><span class="etiqueta">Año Fab.:</span> <span class="valor">${vehiculo.anio}</span></td></tr>
+        
+        <tr><td class="seccion-titulo">REVISION TECNICA</td></tr>
+        <tr><td><span class="etiqueta">Region:</span> <span class="valor">${vehiculo.tecRegion}</span></td></tr>
+        <tr><td><span class="etiqueta">N° Cert:</span> <span class="valor">${vehiculo.tecCert}</span></td></tr>
+        <tr><td><span class="etiqueta">Fecha:</span> <span class="valor">${vehiculo.tecFecha}</span></td></tr>
+        <tr><td><span class="etiqueta">Estado:</span> <span class="valor">${vehiculo.tecEstado}</span></td></tr>
+        <tr><td><span class="etiqueta">Fecha Venc.:</span> <span class="valor">${vehiculo.tecVenc}</span></td></tr>
+        <tr><td><span class="etiqueta">Nombre PRT:</span> <span class="valor">${vehiculo.tecNombre}</span></td></tr>
+        <tr><td><span class="etiqueta">Dirección PRT:</span> <span class="valor">${vehiculo.tecDir}</span></td></tr>
+        
+        <tr><td class="seccion-titulo">REVISION GASES</td></tr>
+        <tr><td><span class="etiqueta">Region:</span> <span class="valor">${vehiculo.gasRegion}</span></td></tr>
+        <tr><td><span class="etiqueta">N° Cert:</span> <span class="valor">${vehiculo.gasCert}</span></td></tr>
+        <tr><td><span class="etiqueta">Fecha:</span> <span class="valor">${vehiculo.gasFecha}</span></td></tr>
+        <tr><td><span class="etiqueta">Estado:</span> <span class="valor">${vehiculo.gasEstado}</span></td></tr>
+        <tr><td><span class="etiqueta">Fecha Venc.:</span> <span class="valor">${vehiculo.gasVenc}</span></td></tr>
+        <tr><td><span class="etiqueta">Nombre PRT:</span> <span class="valor">${vehiculo.gasNombre}</span></td></tr>
+        <tr><td><span class="etiqueta">Dirección PRT:</span> <span class="valor">${vehiculo.gasDir}</span></td></tr>
+    `;
+
+    document.getElementById('tablaInfo').innerHTML = htmlContenido;
+</script>
+
+</body>
+</html>
